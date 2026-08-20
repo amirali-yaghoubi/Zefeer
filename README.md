@@ -20,6 +20,14 @@ Early development(front end). Not stable.
 (to be added)
 
 ## Development Environment
-- Built entirely on **Debian 12 (Termux/proot-distro)**
-- Device: **Xiaomi Poco X3 Pro**
-- No external keyboard — everything typed on the virtual keyboard
+
+- **OS:** Debian 12 (x86_64)
+- **Build System:** GNU Make
+
+---
+
+## Development History
+
+This project was initially developed entirely on a **Xiaomi Poco X3 Pro** using **Termux** with `proot-distro` (Debian 12). All of the lexer and early parser work was written and tested on a phone using a virtual keyboard. 
+
+The project is now maintained on a Lenovo IdeaPad slim 3 15IRH10 (83K100VDIN) laptop, but the ARM64 code generation target remains a key goal to honor its mobile origins.
