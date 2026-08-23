@@ -146,6 +146,20 @@ static ASTBlock* make_block_node(Arena* a, ASTBlockStmt* first)
 
     return block;
 }
+
+
+static ASTIfStmt* make_if_node(Arena* a, ASTNode* cond, ASTNode* thenBlock, ASTNode* elseBlock)
+{
+    ASTIfStmt* if_stmt = arena_alloc(a, sizeof(ASTIfStmt));
+
+    if_stmt->base.type = AST_STMT_IF;
+
+    if_stmt->condition = cond;
+    if_stmt->then_block = thenBlock;
+    if_stmt->else_block = elseBlock;
+
+    return if_stmt;
+}
 //==== ====
 
 
@@ -259,8 +273,30 @@ static ASTNode* parse_assignment(Arena* a, Parser* p)
 
 
 
+static ASTNode* parse_if(Arena* a, Parser* p)
+{
+    expect(p, TOK_IF);
+    expect(p, TOK_LEFT_PAREN);
+    ASTNode* cond = parse_expression(a, p);
+    expect(p, TOK_RIGHT_PAREN);
+    ASTNode* thenBlock = parse_block(a, p);
+    ASTNode* elseBlock = NULL;
+    if (check(p, TOK_ELSE))
+    {
+        advance(p);
+        elseBlock = parse_block(a, p);
+    }
+
+    return (ASTNode*)make_if_node(a, cond, thenBlock, elseBlock);
+}
+
+
+
 ASTNode* parse_statement(Arena* a, Parser* p)
 {
+    if(check(p, TOK_IF))
+        return parse_if(a, p);
+
     ASTNode* stmt;
 
     if (check(p, TOK_LET)) {

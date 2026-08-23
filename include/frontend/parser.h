@@ -97,6 +97,14 @@ typedef struct {
 } ASTBlock;
 
 
+typedef struct {
+    ASTNode base;
+
+    ASTNode* condition;
+    ASTBlock* then_block;
+    ASTBlock* else_block;
+} ASTIfStmt;
+
 
 const char *ASTTypeStr(ASTType type);
 void parser_init(Parser* p, Lexer* l);
