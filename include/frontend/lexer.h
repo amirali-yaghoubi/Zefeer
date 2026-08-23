@@ -7,6 +7,7 @@ typedef enum {
 
     TOK_LET,
     TOK_IF,
+    TOK_ELSE,
     TOK_FOR,
     TOK_WHILE,
     TOK_FUNCTION,

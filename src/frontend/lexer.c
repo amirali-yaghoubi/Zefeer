@@ -32,6 +32,7 @@ const char *token_type_to_str(TokenType t) {
 
         case TOK_LET:            return "TOK_LET";
         case TOK_IF:             return "TOK_IF";
+        case TOK_ELSE:           return "TOK_ELSE";
         case TOK_FOR:            return "TOK_FOR";
         case TOK_WHILE:          return "TOK_WHILE";
         case TOK_FUNCTION:       return "TOK_FUNCTION";
@@ -88,6 +89,9 @@ static TokenType check_keyword(const char* start, int length)
 
     if (length == 2 && strncmp(start, "if", 2) == 0)
         return TOK_IF;
+
+    if (length == 4 && strncmp(start, "else", 4) == 0)
+        return TOK_ELSE;
 
     if (length == 3 && strncmp(start, "for", 3) == 0)
         return TOK_FOR;
