@@ -16,7 +16,8 @@ typedef enum {
     AST_PROGRAM,
 
     //Statment
-    AST_STMT_IF,
+    ASR_STMT_IF,
+    AST_STMT_WHILE,
     AST_STMT_BLOCK,
     AST_STMT_RETURN,
     AST_STMT_VARDECL,
@@ -104,6 +105,15 @@ typedef struct {
     ASTBlock* then_block;
     ASTBlock* else_block;
 } ASTIfStmt;
+
+
+typedef struct {
+    ASTNode base;
+
+    ASTNode* condition;
+    ASTBlock* body;
+} ASTWhileStmt;
+
 
 
 const char *ASTTypeStr(ASTType type);

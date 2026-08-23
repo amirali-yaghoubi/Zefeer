@@ -160,6 +160,19 @@ static ASTIfStmt* make_if_node(Arena* a, ASTNode* cond, ASTNode* thenBlock, ASTN
 
     return if_stmt;
 }
+
+
+static ASTWhileStmt* make_while_node(Arena* a, ASTNode* cond, ASTNode* body)
+{
+    ASTWhileStmt* while_stmt = arena_alloc(a, sizeof(ASTWhileStmt));
+
+    while_stmt->base.type = AST_STMT_WHILE;
+
+    while_stmt->condition = cond;
+    while_stmt->body = body;
+
+    return while_stmt;
+}
 //==== ====
 
 
@@ -292,10 +305,27 @@ static ASTNode* parse_if(Arena* a, Parser* p)
 
 
 
+static ASTNode* parse_while(Arena* a, Parser* p)
+{
+    expect(p, TOK_WHILE);
+    expect(p, TOK_LEFT_PAREN);
+    ASTNode* cond = parse_expression(a, p);
+    expect(p, TOK_RIGHT_PAREN);
+    ASTNode* body = parse_block(a, p);
+
+    return (ASTNode*)make_while_node(a, cond, body);
+}
+
+
+
 ASTNode* parse_statement(Arena* a, Parser* p)
 {
     if(check(p, TOK_IF))
         return parse_if(a, p);
+
+    if (check(p, TOK_WHILE))
+        return parse_while(a, p);
+        
 
     ASTNode* stmt;
 
