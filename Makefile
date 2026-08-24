@@ -11,7 +11,7 @@ INC_DIR     = include
 # Final output name
 TARGET      = $(BUILD_DIR)/main
 
-# Find all .c files in src and its subdirectories (backend, frontend, middle, ...)
+# Find all .c files in src and its subdirectories (back, front, middle, ...)
 SRCS        = $(shell find $(SRC_DIR) -type f -name "*.c")
 
 # Convert .c paths to .o paths inside build folder (folder structure is preserved)

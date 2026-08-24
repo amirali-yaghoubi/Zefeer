@@ -1,5 +1,5 @@
-#include "frontend/parser.h"
-#include "frontend/lexer.h"
+#include "front/parser.h"
+#include "front/lexer.h"
 #include "common/arena.h"
 #include <stdio.h>
 #include <stdbool.h>

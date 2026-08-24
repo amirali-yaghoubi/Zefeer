@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "common/arena.h"
-#include "frontend/lexer.h"
+#include "front/lexer.h"
 
 
 

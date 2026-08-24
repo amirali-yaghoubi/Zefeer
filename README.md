@@ -21,7 +21,7 @@ Early development(front end). Not stable.
 
 ## Development Environment
 
-- **OS:** Debian 12 (x86_64)
+- **OS:** Ubuntu 24.04 (x86_64)
 - **Build System:** GNU Make
 
 ---

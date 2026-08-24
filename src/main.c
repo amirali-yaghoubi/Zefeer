@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "common/arena.h"
-#include "frontend/lexer.h"
+#include "front/lexer.h"
 
 
 char* read_file(Arena* a, const char* path);
