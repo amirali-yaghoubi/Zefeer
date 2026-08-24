@@ -11,6 +11,7 @@ typedef enum {
     TOK_FOR,
     TOK_WHILE,
     TOK_FUNCTION,
+    TOK_PRINT,
 
     TOK_IDENTIFIER,
     TOK_NUMBER,

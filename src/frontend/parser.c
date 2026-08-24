@@ -173,6 +173,18 @@ static ASTWhileStmt* make_while_node(Arena* a, ASTNode* cond, ASTNode* body)
 
     return while_stmt;
 }
+
+
+static ASTPrintStmt* make_print_node(Arena* a, ASTNode* expr)
+{
+    ASTPrintStmt* print_stmt = arena_alloc(a, sizeof(ASTPrintStmt));
+
+    print_stmt->base.type = AST_STMT_PRINT;
+
+    print_stmt->expression = expr;
+
+    return print_stmt;
+}
 //==== ====
 
 
@@ -269,6 +281,7 @@ static ASTNode* parse_declaration(Arena* a, Parser* p)
     Token type_tok = expect(p, TOK_INT);
     expect(p, TOK_ASSIGNMENT);
     ASTNode* init = parse_expression(a, p);
+    expect(p, TOK_SEMICOLON);
 
     return (ASTNode*)make_vardecl_node(a, name_tok, type_tok, init);
 }
@@ -280,6 +293,7 @@ static ASTNode* parse_assignment(Arena* a, Parser* p)
     Token name_tok = expect(p, TOK_IDENTIFIER);
     expect(p, TOK_ASSIGNMENT);
     ASTNode* expr = parse_expression(a, p);
+    expect(p, TOK_SEMICOLON);
 
     return (ASTNode*)make_assignment_node(a, name_tok, expr);
 }
@@ -318,6 +332,19 @@ static ASTNode* parse_while(Arena* a, Parser* p)
 
 
 
+static ASTNode* parse_print(Arena* a, Parser* p)
+{
+    expect(p, TOK_PRINT);
+    expect(p, TOK_LEFT_PAREN);
+    ASTNode* expr = parse_expression(a, p);
+    expect(p, TOK_RIGHT_PAREN);
+    expect(p, TOK_SEMICOLON);
+    
+    return (ASTNode*)make_print_node(a, expr);
+}
+
+
+
 ASTNode* parse_statement(Arena* a, Parser* p)
 {
     if(check(p, TOK_IF))
@@ -325,7 +352,10 @@ ASTNode* parse_statement(Arena* a, Parser* p)
 
     if (check(p, TOK_WHILE))
         return parse_while(a, p);
-        
+    
+    if (check(p, TOK_PRINT))
+            return parse_print(a, p);
+
 
     ASTNode* stmt;
 
@@ -336,8 +366,6 @@ ASTNode* parse_statement(Arena* a, Parser* p)
     } else {
         stmt = parse_expression(a, p);
     }
-
-    expect(p, TOK_SEMICOLON);
 
     return stmt;
 }
