@@ -16,7 +16,7 @@ typedef enum {
     AST_PROGRAM,
 
     //Statment
-    ASR_STMT_IF,
+    AST_STMT_IF,
     AST_STMT_WHILE,
     AST_STMT_BLOCK,
     AST_STMT_RETURN,
