@@ -345,7 +345,7 @@ static ASTNode* parse_print(Arena* a, Parser* p)
 
 
 
-ASTNode* parse_statement(Arena* a, Parser* p)
+static ASTNode* parse_statement(Arena* a, Parser* p)
 {
     if(check(p, TOK_IF))
         return parse_if(a, p);
@@ -368,7 +368,7 @@ ASTNode* parse_statement(Arena* a, Parser* p)
 
 
 
-ASTNode* parse_block(Arena* a, Parser* p)
+static ASTNode* parse_block(Arena* a, Parser* p)
 {
     expect(p, TOK_LEFT_BRACE);
 
