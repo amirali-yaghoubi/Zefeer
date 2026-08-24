@@ -129,3 +129,4 @@ const char *ASTTypeStr(ASTType type);
 void parser_init(Parser* p, Lexer* l);
 ASTNode* parse_statement(Arena* a, Parser* p);
 ASTNode* parse_block(Arena* a, Parser* p);
+ASTNode* parse_program(Arena* a, Parser* p);

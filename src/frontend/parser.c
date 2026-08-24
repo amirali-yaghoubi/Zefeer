@@ -356,18 +356,14 @@ ASTNode* parse_statement(Arena* a, Parser* p)
     if (check(p, TOK_PRINT))
             return parse_print(a, p);
 
+    if (check(p, TOK_LET))
+        return parse_declaration(a, p);
+    
+    if (check(p, TOK_IDENTIFIER))
+        return parse_assignment(a, p);
 
-    ASTNode* stmt;
-
-    if (check(p, TOK_LET)) {
-        stmt = parse_declaration(a, p);
-    } else if (check(p, TOK_IDENTIFIER)) {
-        stmt = parse_assignment(a, p);
-    } else {
-        stmt = parse_expression(a, p);
-    }
-
-    return stmt;
+    fprintf(stderr, "Syntax error: unexpected token in line %d\n", p->current.line);
+    exit(1);
 }
 
 
@@ -398,5 +394,31 @@ ASTNode* parse_block(Arena* a, Parser* p)
 
     expect(p, TOK_RIGHT_BRACE);
 
+    return (ASTNode*)make_block_node(a, first);
+}
+
+
+
+ASTNode* parse_program(Arena* a, Parser* p)
+{
+    ASTBlockStmt* first = NULL;
+    ASTBlockStmt* last = NULL;
+
+    while(!check(p, TOK_EOF))
+    {
+        ASTNode* stmt = parse_statement(a, p);
+
+        ASTBlockStmt* node = arena_alloc(a, sizeof(ASTBlockStmt));
+
+        node->node = stmt;
+        node->next = NULL;
+
+        if (last == NULL) {
+            first = node;
+        } else {
+            last->next = node;
+        }
+        last = node;
+    }
     return (ASTNode*)make_block_node(a, first);
 }
