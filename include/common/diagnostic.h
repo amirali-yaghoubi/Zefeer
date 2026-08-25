@@ -28,4 +28,4 @@ typedef struct {
 } DiagnosticContext;
 
 
-void diagnostic_report(DiagnosticContext* dc, const char* msg);
+void diagnostic_report(DiagnosticContext* dc, const char* format, ...);
