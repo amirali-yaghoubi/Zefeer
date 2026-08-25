@@ -1,23 +1,30 @@
-/*
- Test the lexer
- */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "common/arena.h"
 #include "front/lexer.h"
+#include "front/parser.h"
 
 
 char* read_file(Arena* a, const char* path);
 
-int main()
+int main(int argc, char *argv[])
 {
-    Arena a;
-    arena_init(&a);
-    const char* source_path = "src/test_source.txt";
+    if (argc != 2)
+    {
+        printf("Error: No input file!\n");
+        return 1;
+    }
 
-    char* source = read_file(&a, source_path);
+    const char* source_path = argv[1];
+
+
+    Arena reader_arena, parser_arena;
+    
+    arena_init(&reader_arena);
+    arena_init(&parser_arena);
+    
+
+    char* source = read_file(&reader_arena, source_path);
     if (!source)
     {
         fprintf(stderr, "Failed to read %s\n", source_path);
@@ -27,32 +34,26 @@ int main()
     Lexer lexer = {0};
     lexer_init(&lexer, source);
 
-    printf("source code:\n\n");
-    printf("_______________\n");
-    printf("%s\n", source);
-    printf("_______________\n\n");
-    printf("Lexer output:\n\n");
-    printf("----------------\n\n");
-    printf("TOKEN              LEN     VALUE     LINE  START\n\n");
+    Parser parser = {0};
+    parser_init(&parser, &lexer);
 
-    while (1)
-    {
-    Token token = get_next_token(&lexer);
 
-    if (token.type == TOK_EOF) break;
-    
-    printf("%-18s %-7d %-9ld %-5d %p\n",
-       TokenTypeStr((TokenType)token.type),
-       token.length,
-       token.value.int_value,
-       token.line,
-       token.start
-    );
+    ASTNode* ast = parse_program(&parser_arena, &parser);
 
+    if (!ast) {
+        fprintf(stderr, "Parsing failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        return 1;
     }
-    printf("\n----------------\n\n");
 
-    arena_free(&a);
+    // =====================
+    // ==== TO BE ADDED ====
+    // =====================
+
+    
+    arena_free(&reader_arena);
+    arena_free(&parser_arena);
 
     return 0;
 }
