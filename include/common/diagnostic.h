@@ -9,7 +9,7 @@
 #define ERR_MISSING_SEMICOLON "missing semicolon"
 
 
-
+#include <stdio.h>
 #include <stdbool.h>
 
 
@@ -26,3 +26,6 @@ typedef struct {
     char* note;
     char* file_name;
 } DiagnosticContext;
+
+
+void diagnostic_report(DiagnosticContext* dc, const char* msg);
