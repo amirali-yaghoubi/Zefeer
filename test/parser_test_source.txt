@@ -1,0 +1,17 @@
+let x : int = 8;
+let y : int = 38;
+
+
+if (x + 9 >= y)
+{
+    while (1)
+    {
+        let i : int = 999;
+        let j : int = 6543;
+    }
+} else {
+    let i : int = 647;
+    let j : int = 2;
+}
+
+print(i - j);
