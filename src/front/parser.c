@@ -299,7 +299,7 @@ static ASTNode* parse_assignment(Arena* a, Parser* p)
 }
 
 
-
+static ASTNode* parse_block(Arena* a, Parser* p);
 static ASTNode* parse_if(Arena* a, Parser* p)
 {
     expect(p, TOK_IF);
