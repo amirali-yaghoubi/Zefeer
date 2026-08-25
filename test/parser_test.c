@@ -1,7 +1,3 @@
-/*
- Test the lexer
- */
-
 
 #include <stdio.h>
 #include <stdlib.h>
