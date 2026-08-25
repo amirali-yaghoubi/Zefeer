@@ -155,8 +155,8 @@ static ASTIfStmt* make_if_node(Arena* a, ASTNode* cond, ASTNode* thenBlock, ASTN
     if_stmt->base.type = AST_STMT_IF;
 
     if_stmt->condition = cond;
-    if_stmt->then_block = thenBlock;
-    if_stmt->else_block = elseBlock;
+    if_stmt->then_block = (ASTBlock*)thenBlock;
+    if_stmt->else_block = (ASTBlock*)elseBlock;
 
     return if_stmt;
 }
@@ -169,7 +169,7 @@ static ASTWhileStmt* make_while_node(Arena* a, ASTNode* cond, ASTNode* body)
     while_stmt->base.type = AST_STMT_WHILE;
 
     while_stmt->condition = cond;
-    while_stmt->body = body;
+    while_stmt->body = (ASTBlock*)body;
 
     return while_stmt;
 }
