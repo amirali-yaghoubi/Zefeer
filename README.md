@@ -9,7 +9,7 @@ Mid development. Not stable.
 ## Goals
 - Simple Lexer + Parser
 - ARM64 Code generation
-- Minimal C-like syntax
+- Minimal C-like syntax (integer declaration and assignment, if/else, while loop)
 
 ## Current progress
 - Lexer is done
