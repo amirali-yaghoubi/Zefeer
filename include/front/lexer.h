@@ -49,6 +49,7 @@ typedef struct {
         long int_value;
     } value;
     int line;
+    char* file_name;
 } Token;
 
 typedef struct {

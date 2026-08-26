@@ -136,7 +136,8 @@ static Token lex_math_oprators(Lexer* l, const char* start)
             .type = TOK_PLUS,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -147,7 +148,8 @@ static Token lex_math_oprators(Lexer* l, const char* start)
             .type = TOK_MINUS,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -158,7 +160,8 @@ static Token lex_math_oprators(Lexer* l, const char* start)
             .type = TOK_DIVIDE,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -169,7 +172,8 @@ static Token lex_math_oprators(Lexer* l, const char* start)
             .type = TOK_MULTIPLY,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -177,7 +181,8 @@ static Token lex_math_oprators(Lexer* l, const char* start)
         .type = TOK_UNKNOWN, 
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
 
@@ -191,7 +196,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_COLON,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -202,7 +208,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_SEMICOLON,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -213,7 +220,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_COMMA,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -225,7 +233,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_LEFT_BRACE,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -236,7 +245,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_RIGHT_BRACE,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -247,7 +257,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_LEFT_PAREN,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -258,7 +269,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
             .type = TOK_RIGHT_PAREN,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -266,7 +278,8 @@ static Token lex_punctuations(Lexer* l, const char* start)
         .type = TOK_UNKNOWN, 
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
 
@@ -283,14 +296,16 @@ static Token lex_assignment_and_compare(Lexer* l, const char* start)
                 .type = TOK_GREATER_EQUAL,
                 .start = start,
                 .length = 2,
-                .line = l->line
+                .line = l->line,
+                .file_name = l->file_name
             };
         }
         return (Token){
             .type = TOK_GREATER,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -304,14 +319,16 @@ static Token lex_assignment_and_compare(Lexer* l, const char* start)
                 .type = TOK_LESS_EQUAL,
                 .start = start,
                 .length = 2,
-                .line = l->line
+                .line = l->line,
+                .file_name = l->file_name
             };
         }
         return (Token){
             .type = TOK_LESS,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -325,14 +342,16 @@ static Token lex_assignment_and_compare(Lexer* l, const char* start)
                 .type = TOK_EQUAL_EQUAL,
                 .start = start,
                 .length = 2,
-                .line = l->line
+                .line = l->line,
+                .file_name = l->file_name
             };
         }
         return (Token){
             .type = TOK_ASSIGNMENT,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -347,14 +366,16 @@ static Token lex_assignment_and_compare(Lexer* l, const char* start)
                 .type = TOK_NOT_EQUAL,
                 .start = start,
                 .length = 2,
-                .line = l->line
+                .line = l->line,
+                .file_name = l->file_name
             };
         }
         return (Token){
             .type = TOK_NOT,
             .start = start,
             .length = 1,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -362,7 +383,8 @@ static Token lex_assignment_and_compare(Lexer* l, const char* start)
         .type = TOK_UNKNOWN, 
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
 
@@ -378,7 +400,8 @@ static Token lex_identifier_or_keyword(Lexer* l, const char* start)
             .type = check_keyword(start, length),
             .start = start,
             .length = length,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -386,7 +409,8 @@ static Token lex_identifier_or_keyword(Lexer* l, const char* start)
         .type = TOK_UNKNOWN, 
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
 
@@ -408,7 +432,8 @@ static Token lex_number(Lexer* l, const char* start)
             .start = start,
             .length = (int)(l->current - start),
             .value.int_value = value,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -416,7 +441,8 @@ static Token lex_number(Lexer* l, const char* start)
         .type = TOK_UNKNOWN, 
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
 
@@ -433,7 +459,8 @@ Token get_next_token(Lexer* l)
             .type = TOK_EOF,
             .start = start,
             .length = 0,
-            .line = l->line
+            .line = l->line,
+            .file_name = l->file_name
         };
     }
 
@@ -464,7 +491,7 @@ Token get_next_token(Lexer* l)
         .type = TOK_UNKNOWN,
         .start = start,
         .length = 1,
-        .line = l->line
+        .line = l->line,
+        .file_name = l->file_name
     };
 }
-
