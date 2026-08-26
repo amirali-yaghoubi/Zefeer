@@ -10,18 +10,20 @@ static void lexer_set(
         const char* start,
         const char* current,
         int line,
+        const char* file_name,
         Lexer* lexer
         )
 {
     lexer->start = start;
     lexer->current = current;
     lexer->line = line;
+    lexer->file_name = file_name;
 }
 
 
-void lexer_init(Lexer* lexer, const char* source)
+void lexer_init(Lexer* lexer, const char* file_name, const char* source)
 {
-    lexer_set(source, source, 1, lexer);
+    lexer_set(source, source, 1, file_name, lexer);
 }
 
 

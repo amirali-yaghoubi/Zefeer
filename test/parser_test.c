@@ -28,7 +28,7 @@ int main()
     }
 
     Lexer lexer = {0};
-    lexer_init(&lexer, source);
+    lexer_init(&lexer, source_path, source);
 
     Parser parser = {0};
     parser_init(&parser, &lexer);

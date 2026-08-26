@@ -25,7 +25,7 @@ int main()
     printf("______________________________\n");
 
     Lexer l = {0};
-    lexer_init(&l, source);
+    lexer_init(&l, source_path, source);
 
     printf("%-4s %-20s %-15s %-10s %-5s\n",
            "No", "Type", "Text", "Value", "Line");
