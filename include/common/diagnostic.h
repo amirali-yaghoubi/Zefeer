@@ -23,6 +23,7 @@ typedef struct {
     DiagnosticType type;
     bool has_error;
     long line;
+    int col;
     char* note;
     char* file_name;
 } DiagnosticContext;
