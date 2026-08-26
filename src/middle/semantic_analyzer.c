@@ -14,6 +14,7 @@ void semantic_context_init(SemanticContext* ctx, Arena* a)
     ctx->warning_count = 0;
 
     push_scope(ctx); // Creates global scope
+    ctx->current_scope->var_count = 0;
 }
 
 
@@ -79,6 +80,8 @@ static bool add_symbol(SemanticContext* ctx, const char* name, DataType type)
     sym->name = name;
     sym->type = type;
     sym->is_init = false;
+    sym->var_id = ctx->current_scope->var_count; // 0, 1, 2...
+    ctx->current_scope->var_count++;
 
     sym->next = ctx->current_scope->symbols;
     ctx->current_scope->symbols = sym;

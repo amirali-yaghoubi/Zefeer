@@ -14,12 +14,14 @@ typedef struct Symbol {
     char* name;
     DataType type;
     bool is_init;
+    int var_id;
     struct Symbol* next;
 } Symbol;
 
 
 typedef struct Scope {
     Symbol* symbols;
+    int var_count;
     struct Scope* parent;
 } Scope;
 
