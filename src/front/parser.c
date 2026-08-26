@@ -1,6 +1,7 @@
 #include "front/parser.h"
 #include "front/lexer.h"
 #include "common/arena.h"
+#include "common/diagnostic.h"
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -62,8 +63,21 @@ static Token expect(Parser* p, TokenType type)
 { 
     if (check(p, type))
         return advance(p);
-    fprintf(stderr, "Syntax error: expected token type %d in line %d\n", type, p->lexer->line);
+
+    DiagnosticContext dc = {
+        .type = DIAG_ERROR,
+        .has_error = true,
+        .line = (long)p->current.line,
+        .note = NULL,
+        .file_name = p->lexer->file_name
+    };
+
+    const char* type_expt  = token_type_to_str(type);
+    const char* type_got = token_type_to_str(p->current.type);
+
+    diagnostic_report(&dc, ERR_EXPECTED_TOKEN, type_expt, type_got);
     exit(1);
+    
     return (Token){0}; // unreachable, satisfies the compiler
 }
 
@@ -213,7 +227,18 @@ static ASTNode* parse_primary(Arena* a, Parser* p)
         return expr;
     }
 
-    fprintf(stderr, "Syntax error: unexpected token in line %d\n", p->current.line);
+    
+    DiagnosticContext dc = {
+        .has_error = true,
+        .line = (long)p->current.line,
+        .note = NULL,
+        .type = DIAG_ERROR,
+        .file_name = p->lexer->file_name
+    };
+
+    const char* type = token_type_to_str(p->current.type);
+
+    diagnostic_report(&dc, ERR_UNEXPECTED_TOKEN, type);
     exit(1);
 }
 
@@ -362,7 +387,19 @@ static ASTNode* parse_statement(Arena* a, Parser* p)
     if (check(p, TOK_IDENTIFIER))
         return parse_assignment(a, p);
 
-    fprintf(stderr, "Syntax error: unexpected token in line %d\n", p->current.line);
+
+    DiagnosticContext dc = {
+        .has_error = true,
+        .line = (long)p->current.line,
+        .note = NULL,
+        .type = DIAG_ERROR,
+        .file_name = p->lexer->file_name
+    };
+
+    const char* type = token_type_to_str(p->current.type);
+
+    diagnostic_report(&dc, ERR_UNEXPECTED_TOKEN, type);
+    long line = p->current.line;
     exit(1);
 }
 

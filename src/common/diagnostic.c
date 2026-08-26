@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-void diagnostic_report(DiagnosticContext* dc, const char* format, ...)  // CHANGE THIS LINE
+void diagnostic_report(DiagnosticContext* dc, const char* format, ...)
 {
     dc->has_error = true;
     
@@ -18,21 +18,21 @@ void diagnostic_report(DiagnosticContext* dc, const char* format, ...)  // CHANG
 
     if(dc->note != NULL){
        if(dc->type == DIAG_ERROR) {
-            diag_msg = "[ERROR]: %s: %ld: %d\n%s\n[NOTE]: %s\n";
+            diag_msg = "[ERROR]: %s: %ld:\n%s\n[NOTE]: %s\n";
         } else if(dc->type == DIAG_WARNING) {
-            diag_msg = "[WARNING]: %s: %ld: %d\n%s\n[NOTE]: %s\n";
+            diag_msg = "[WARNING]: %s: %ld:\n%s\n[NOTE]: %s\n";
         } else {
             return;
         }
         printf(diag_msg, dc->file_name, dc->line, msg, dc->note);
     } else {
         if(dc->type == DIAG_ERROR) {
-            diag_msg = "[ERROR]: %s: %ld: %d\n%s\n";
+            diag_msg = "[ERROR]: %s: %ld:\n%s\n";
         } else if(dc->type == DIAG_WARNING) {
-            diag_msg = "[WARNING]: %s: %ld: %d\n%s\n";
+            diag_msg = "[WARNING]: %s: %ld:\n%s\n";
         } else {
             return;
         }
-        printf(diag_msg, dc->file_name, dc->line, dc->col, msg);
+        printf(diag_msg, dc->file_name, dc->line, msg);
     }
 }
