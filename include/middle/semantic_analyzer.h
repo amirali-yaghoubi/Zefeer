@@ -28,8 +28,12 @@ typedef struct Scope {
 
 typedef struct {
     Scope* current_scope;
+    Scope* root_scope;
     bool has_error;
     int error_count;
     int warning_count;
     Arena* arena;
-} SemanticContext; 
+} SemanticContext;
+
+
+void analyze_program(ASTNode* root, SemanticContext* ctx);
