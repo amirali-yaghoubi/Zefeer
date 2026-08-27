@@ -1,4 +1,4 @@
-# myLang
+# Zefeer
 
 ## Overview
 A small C-like compiled language written in C for learing Compiler design as a hobby
