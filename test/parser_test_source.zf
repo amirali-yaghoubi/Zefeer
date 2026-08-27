@@ -6,7 +6,7 @@ if (x + 9 >= y)
 {
     while (1)
     {
-        let i : int = 999;
+        let i : int = x;
         let j : int = 6543;
     }
 } else {

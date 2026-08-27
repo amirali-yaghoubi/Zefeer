@@ -18,7 +18,7 @@ int main()
     arena_init(&visualizer_arena);
 
     arena_init(&reader_arena);
-    const char* source_path = "test/parser_test_source.txt";
+    const char* source_path = "test/parser_test_source.zf";
 
     char* source = read_file(&reader_arena, source_path);
     if (!source)

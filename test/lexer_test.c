@@ -4,7 +4,7 @@
 
 
 
-const char* source_path = "test/lexer_test_source.txt";
+const char* source_path = "test/lexer_test_source.zf";
 
 
 char* read_file(Arena* a, const char* path);
