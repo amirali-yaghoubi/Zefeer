@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lexer.h"
+#include "middle/semantic_analyzer.h"
 #include "common/arena.h"
 #include <stdlib.h>
 
@@ -36,6 +37,7 @@ typedef enum {
 
 typedef struct ASTNode {
     ASTType type;
+    DataType resolved_type;
 } ASTNode;
 
 
@@ -62,6 +64,7 @@ typedef struct {
 typedef struct {
     ASTNode base;
     Token token;
+    Symbol* symbol_ref;
 } ASTIdentExpr;
 
 
