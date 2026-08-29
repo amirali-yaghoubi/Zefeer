@@ -32,6 +32,7 @@ typedef struct {
     bool has_error;
     int error_count;
     int warning_count;
+    int total_slots;
     Arena* arena;
 } SemanticContext;
 

@@ -87,7 +87,7 @@ static bool add_symbol(SemanticContext* ctx, const char* name, DataType type)
     sym->name = name;
     sym->type = type;
     sym->is_init = false;
-    sym->var_id = ctx->current_scope->var_count; // 0, 1, 2...
+    sym->var_id = ctx->total_slots++; // 0, 1, 2...
     ctx->current_scope->var_count++;
 
     sym->next = ctx->current_scope->symbols;
