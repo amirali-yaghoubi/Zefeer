@@ -17,6 +17,7 @@ void semantic_context_init(SemanticContext* ctx, Arena* a)
     ctx->has_error = false;
     ctx->error_count = 0;
     ctx->warning_count = 0;
+    ctx->total_slots = 0;
 
     push_scope(ctx); // Creates global scope
     ctx->root_scope = ctx->current_scope; // Saves the global scope
@@ -108,7 +109,7 @@ static void analyze_binary_expr(ASTNode* node, SemanticContext* ctx)
     analyze_expression(bin->lhs, ctx);
     analyze_expression(bin->rhs, ctx);
 
-    if(bin->lhs->base.resolved_type == TYPE_ERROR) {
+    if(bin->lhs->resolved_type == TYPE_ERROR) {
         DiagnosticContext dc = {
             .has_error = true,
             .note = NULL,
@@ -117,7 +118,7 @@ static void analyze_binary_expr(ASTNode* node, SemanticContext* ctx)
             .file_name = bin->op.file_name
         };
         diagnostic_report(&dc, ERR_INVALID_EXPRESSION_LEFT);
-    } else if(bin->rhs->base.resolved_type == TYPE_ERROR) {
+    } else if(bin->rhs->resolved_type == TYPE_ERROR) {
         DiagnosticContext dc = {
             .has_error = true,
             .note = NULL,
