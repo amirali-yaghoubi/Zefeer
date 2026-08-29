@@ -85,6 +85,8 @@ typedef struct {
     Token type_token;
 
     ASTNode* initializer;
+
+    Symbol* symbol_ref;
 } ASTVarDeclStmt;
 
 
@@ -93,6 +95,8 @@ typedef struct {
 
     Token name_token;
     ASTNode* value;
+
+    Symbol* symbol_ref;
 } ASTAssignmentStmt;
 
 

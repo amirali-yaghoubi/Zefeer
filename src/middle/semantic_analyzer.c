@@ -234,6 +234,9 @@ static void analyze_declaration(ASTNode* node, SemanticContext* ctx)
 
     if(decl->type_token.type == TOK_INT) // could be switch if later decided to have other types too
         decl->base.resolved_type = TYPE_INT;
+    
+    Symbol* sym = lookup_current(ctx, name);
+    decl->symbol_ref = sym;
 }
 
 
@@ -279,6 +282,8 @@ static void analyze_ASSIGNMENT(ASTNode* node, SemanticContext* ctx)
         diagnostic_report(&dc,ERR_TYPE_MISMATCH);
         var->base.resolved_type = TYPE_ERROR;
     }
+
+    var->symbol_ref = sym;
 }
 
 
