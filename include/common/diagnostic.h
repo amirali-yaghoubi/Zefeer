@@ -8,6 +8,12 @@
 #define ERR_UNEXPECTED_TOKEN "unexpected token '%s'" 
 #define ERR_INVALID_TYPE "invalid type"
 #define ERR_MISSING_SEMICOLON "missing semicolon"
+#define ERR_UNDEFINED_VARIABLE "the variable '%s' is undefined"
+#define ERR_UNKNOWN_TOKEN "use of an unknown token"
+#define ERR_INVALID_EXPRESSION_LEFT "invalid left side expression"
+#define ERR_INVALID_EXPRESSION_RIGHT "invalid right side expression"
+#define ERR_TYPE_MISMATCH "types for left and right side are mismatched"
+
 
 
 #include <stdio.h>
