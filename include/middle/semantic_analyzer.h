@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common/arena.h"
-
+#include "front/parser.h"
 
 typedef enum {
     TYPE_INT,
