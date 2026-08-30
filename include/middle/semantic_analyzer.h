@@ -37,4 +37,5 @@ typedef struct {
 } SemanticContext;
 
 
+void semantic_context_init(SemanticContext* ctx, Arena* a);
 bool analyze_program(ASTNode* root, SemanticContext* ctx);
