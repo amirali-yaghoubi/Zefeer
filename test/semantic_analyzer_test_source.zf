@@ -1,0 +1,10 @@
+let x : int = 8;
+let x : int = 56;
+
+m = 3;
+
+
+if(y >= 5)
+{
+    print(4 - 7 * 7);
+}
