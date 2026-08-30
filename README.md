@@ -7,15 +7,16 @@ A small C-like compiled language written in C for learing Compiler design as a h
 Mid development. Not stable.
 
 ## Goals
-- Simple Lexer + Parser
+- Simple Lexer + Parser + IR
 - ARM64 Code generation
-- Minimal C-like syntax (integer declaration and assignment, if/else, while loop)
+- Minimal C-like syntax (integer declaration and assignment, if/else, while loop and a simple print)
 
 ## Current progress
 - Lexer is done
 - A linked-block arena allocator implemented
 - Parser is done
-- Semantic Analyzer in progress
+- Semantic Analyzer is done
+- IR in progress
 
 ## Build
 (to be added)
