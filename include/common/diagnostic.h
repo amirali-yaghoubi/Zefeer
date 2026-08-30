@@ -31,8 +31,8 @@ typedef struct {
     DiagnosticType type;
     bool has_error;
     long line;
-    char* note;
-    char* file_name;
+    const char* note;
+    const char* file_name;
 } DiagnosticContext;
 
 
