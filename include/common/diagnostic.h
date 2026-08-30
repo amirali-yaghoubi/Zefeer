@@ -1,4 +1,5 @@
 #pragma once
+#include "front/parser.h"
 
 
 #define ERR_ASSIGN_BEFORE_DECLARATION "'%s' is not yet declared"

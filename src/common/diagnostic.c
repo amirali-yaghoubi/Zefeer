@@ -1,4 +1,5 @@
 #include "common/diagnostic.h"
+#include "front/parser.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdarg.h>

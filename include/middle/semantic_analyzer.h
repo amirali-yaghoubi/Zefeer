@@ -2,6 +2,7 @@
 
 #include "common/arena.h"
 #include "front/parser.h"
+#include <stdbool.h>
 
 typedef enum {
     TYPE_INT,
