@@ -1,10 +1,9 @@
 #include "middle/semantic_analyzer.h"
+#include "front/parser.h"
 #include "common/arena.h"
 #include "common/diagnostic.h"
-#include "front/parser.h"
 #include <stdio.h>
 #include <stdbool.h>
-
 
 
 

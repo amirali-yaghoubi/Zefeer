@@ -1,8 +1,10 @@
 #pragma once
 
 #include "common/arena.h"
-#include "front/parser.h"
 #include <stdbool.h>
+// not including parser to avoid circlar include bug
+// instead, I add the folling line:
+typedef struct ASTNode ASTNode;
 
 typedef enum {
     TYPE_INT,
