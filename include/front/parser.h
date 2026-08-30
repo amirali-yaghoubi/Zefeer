@@ -3,6 +3,7 @@
 #include "lexer.h"
 #include "middle/semantic_analyzer.h"
 #include "common/arena.h"
+#include "common/diagnostic.h"
 #include <stdlib.h>
 
 
