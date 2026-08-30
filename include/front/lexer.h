@@ -49,14 +49,14 @@ typedef struct {
         long int_value;
     } value;
     int line;
-    char* file_name;
+    const char* file_name;
 } Token;
 
 typedef struct {
     const char* start;
     const char* current;
     int line;
-    char* file_name;
+    const char* file_name;
 } Lexer;
 
 

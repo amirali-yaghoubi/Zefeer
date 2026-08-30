@@ -14,7 +14,7 @@ typedef enum {
 
 
 typedef struct Symbol {
-    char* name;
+    const char* name;
     DataType type;
     bool is_init;
     int var_id;
