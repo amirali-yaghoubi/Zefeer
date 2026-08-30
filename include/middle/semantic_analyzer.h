@@ -37,4 +37,4 @@ typedef struct {
 } SemanticContext;
 
 
-void analyze_program(ASTNode* root, SemanticContext* ctx);
+bool analyze_program(ASTNode* root, SemanticContext* ctx);

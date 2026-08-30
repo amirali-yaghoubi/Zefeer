@@ -373,7 +373,12 @@ static void analyze_block(ASTNode* block, SemanticContext* ctx)
 }
 
 
-void analyze_program(ASTNode* root, SemanticContext* ctx)
+bool analyze_program(ASTNode* root, SemanticContext* ctx)
 {
     analyze_block(root, ctx);
+    
+    if(ctx->has_error != 0)
+        return false;
+    
+    return true;
 }
