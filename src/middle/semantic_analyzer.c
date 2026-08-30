@@ -294,10 +294,10 @@ static void analyze_if(ASTNode* node, SemanticContext* ctx)
 
     analyze_expression(if_node->condition, ctx);
 
-    analyze_block(if_node->then_block, ctx);
+    analyze_block((ASTNode*)if_node->then_block, ctx);
 
     if(if_node->else_block != NULL)
-        analyze_block(if_node->else_block, ctx);
+        analyze_block((ASTNode*)if_node->else_block, ctx);
 }
 
 
@@ -307,7 +307,7 @@ static void analyze_while(ASTNode* node, SemanticContext* ctx)
 
     analyze_expression(while_node->condition, ctx);
 
-    analyze_block(while_node->body, ctx);
+    analyze_block((ASTNode*)while_node->body, ctx);
 }
 
 
