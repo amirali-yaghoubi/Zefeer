@@ -3,6 +3,15 @@
 #include "front/parser.h"
 
 
+
+typedef struct {
+    IRInstruction *data;
+    size_t size;
+    size_t capacity;
+} IRInstructionVec;
+
+
+
 typedef enum {
     IR_CONST,
     IR_MOVE,
@@ -57,10 +66,15 @@ typedef struct {
 
 typedef struct {
     Arena* arena;
-    IRInstruction* instructions;
+    IRInstructionVec instructions_vector;
 
     int next_temp;
     int next_label;
     
     ASTNode* ast;
 } IRContext;
+
+
+
+void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast);
+void ir_vec_free(IRInstructionVec *vec);
