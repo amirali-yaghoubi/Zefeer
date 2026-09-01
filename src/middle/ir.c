@@ -132,8 +132,8 @@ static IROperand* generate_expression_binary(IRContext* irc, ASTNode* node)
 {
     ASTBinaryExpr* bin = (ASTBinaryExpr*)node;
 
-    IROperand* left = generate_expresssion(irc, bin->lhs);
-    IROperand* right = generate_expresssion(irc, bin->rhs);
+    IROperand* left = generate_expression(irc, bin->lhs);
+    IROperand* right = generate_expression(irc, bin->rhs);
 
     int t = new_temp(irc);
     IROperand* dst = make_operand_temp(irc, t);
@@ -168,11 +168,11 @@ static IROperand* generate_expression(IRContext* irc, ASTNode* expr)
             break;
 
         case AST_EXPR_IDENT :
-            generate_expresssion_ident(irc, expr);
+            generate_expression_ident(irc, expr);
             break;
 
         case AST_EXPR_BINARY :
-            generate_expresssion_binary(irc, expr);
+            generate_expression_binary(irc, expr);
             break;
     }
 }
