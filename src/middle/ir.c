@@ -164,15 +164,15 @@ static IROperand* generate_expression(IRContext* irc, ASTNode* expr)
     switch(expr->type)
     {
         case AST_EXPR_NUMBER :
-            generate_expression_number(irc, expr);
+            return generate_expression_number(irc, expr);
             break;
 
         case AST_EXPR_IDENT :
-            generate_expression_ident(irc, expr);
+            return generate_expression_ident(irc, expr);
             break;
 
         case AST_EXPR_BINARY :
-            generate_expression_binary(irc, expr);
+            return generate_expression_binary(irc, expr);
             break;
     }
 }
