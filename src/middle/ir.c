@@ -95,28 +95,90 @@ static IROperand* make_operand_temp(IRContext* irc, int temp)
 }
 
 
-//====       ====
+static int new_temp(IRContext* irc)
+{
+    return irc->next_temp++;
+}
 
-static generate_expresssion(ASTNode* expr)
+
+static unsigned new_label(IRContext* irc)
+{
+    return irc->next_label++;
+}
+
+
+static void emit_inst(IRContext* irc, IROpCode op, IROperand dst, IROperand src1, IROperand src2, unsigned label)
+{
+    IRInstruction inst = {op, dst, src1, src2, label};
+    ir_vec_push(&irc->instructions_vector, inst);
+}
+
+
+static IROperand* generate_expression_number(IRContext* irc, ASTNode* node)
+{
+    ASTNumberExpr* num = (ASTNumberExpr*)node;
+    return make_operand_const(irc, num->token.value.int_value);
+}
+
+
+static IROperand* generate_expression_ident(IRContext* irc, ASTNode* node)
+{
+    ASTIdentExpr* ident = (ASTIdentExpr*)node;
+    return make_operand_var(irc, ident->symbol_ref);
+}
+
+static IROperand* generate_expression(IRContext* irc, ASTNode* expr);
+static IROperand* generate_expression_binary(IRContext* irc, ASTNode* node)
+{
+    ASTBinaryExpr* bin = (ASTBinaryExpr*)node;
+
+    IROperand* left = generate_expresssion(irc, bin->lhs);
+    IROperand* right = generate_expresssion(irc, bin->rhs);
+
+    int t = new_temp(irc);
+    IROperand* dst = make_operand_temp(irc, t);
+
+    IROpCode opcode;
+    switch(bin->op.type)
+    {
+        case TOK_PLUS : opcode = IR_ADD; break;
+        case TOK_MINUS : opcode = IR_SUB; break;
+        case TOK_MULTIPLY : opcode = IR_MUL; break;
+        case TOK_DIVIDE : opcode = IR_DIV; break;
+
+        case TOK_EQUAL_EQUAL : opcode = IR_CMP_EQ; break;
+        case TOK_NOT_EQUAL : opcode = IR_CMP_NE; break;
+        case TOK_GREATER_EQUAL : opcode = IR_CMP_GE; break;
+        case TOK_LESS_EQUAL : opcode = IR_CMP_LE; break;
+        case TOK_GREATER : opcode = IR_CMP_GT; break;
+        case TOK_LESS : opcode = IR_CMP_LT; break;
+    }
+    emit_inst(irc, opcode, *dst, *left, *right, 0);
+    return dst;
+}
+
+//====       =====
+
+static IROperand* generate_expression(IRContext* irc, ASTNode* expr)
 {
     switch(expr->type)
     {
         case AST_EXPR_NUMBER :
-            generate_expression_number();
-            break;
-
-        case AST_EXPR_BINARY :
-            generate_expresssion_binary();
+            generate_expression_number(irc, expr);
             break;
 
         case AST_EXPR_IDENT :
-            generate_expresssion_ident();
+            generate_expresssion_ident(irc, expr);
+            break;
+
+        case AST_EXPR_BINARY :
+            generate_expresssion_binary(irc, expr);
             break;
     }
 }
 
 
-static generate_statement(ASTNode* stmt)
+static void generate_statement(ASTNode* stmt)
 {
     switch(stmt->type)
     {
