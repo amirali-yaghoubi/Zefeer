@@ -1,0 +1,10 @@
+let x : int = 8;
+
+if (x >= 4)
+{
+    while (x > 3)
+    {
+        print(x);
+        x = x - 1;
+    }
+}
