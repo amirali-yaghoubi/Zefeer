@@ -228,6 +228,7 @@ static void generate_while(IRContext* irc, ASTNode* node)
     IROperand* eq_op = make_operand_temp(irc, eq_temp);
 
     emit_inst(irc, IR_CMP_EQ, *eq_op, *cond, *zero, 0);
+    emit_inst(irc, IR_BRANCH, (IROperand){0}, *eq_op, (IROperand){0}, exit_label);
 
     generate_statement(irc, while_stmt->body);
     emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, loop_label);
