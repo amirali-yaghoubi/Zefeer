@@ -187,6 +187,8 @@ static void generate_assignment(IRContext* irc, ASTNode* node)
     emit_store(irc, assign->value, assign->symbol_ref);
 }
 
+
+static void generate_statement(IRContext* irc, ASTNode* stmt);
 static void generate_if(IRContext* irc, ASTNode* node)
 {
     ASTIfStmt* if_stmt = (ASTIfStmt*)node;
