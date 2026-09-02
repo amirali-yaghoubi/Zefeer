@@ -33,6 +33,8 @@ typedef enum {
     IR_BRANCH,
     IR_JUMP,
 
+    IR_LABEL,
+
     IR_PRINT
 } IROpCode;
 

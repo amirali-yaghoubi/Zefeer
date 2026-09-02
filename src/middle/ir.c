@@ -114,6 +114,20 @@ static void emit_inst(IRContext* irc, IROpCode op, IROperand dst, IROperand src1
 }
 
 
+static void emit_store(IRContext* irc, ASTNode* expr, Symbol* sym)
+{
+    IROperand* rhs = generate_expression(irc, expr);
+    IROperand* lhs = make_operand_var(irc, sym);
+    emit_inst(irc, IR_MOVE, *lhs, *rhs, (IROperand){0}, 0);
+}
+//====    ====
+
+
+
+
+
+//====Expression Helpers====
+
 static IROperand* generate_expression_number(IRContext* irc, ASTNode* node)
 {
     ASTNumberExpr* num = (ASTNumberExpr*)node;
@@ -156,58 +170,143 @@ static IROperand* generate_expression_binary(IRContext* irc, ASTNode* node)
     emit_inst(irc, opcode, *dst, *left, *right, 0);
     return dst;
 }
+//=================
 
-//====       =====
 
+//====Statemente Helpers====
+static void generate_declaration(IRContext* irc, ASTNode* node)
+{
+    ASTVarDeclStmt* decl = (ASTVarDeclStmt*)node;
+    if(decl->initializer)
+        emit_store(irc, decl->initializer, decl->symbol_ref);
+}
+
+static void generate_assignment(IRContext* irc, ASTNode* node)
+{
+    ASTAssignmentStmt* assign = (ASTAssignmentStmt*)node;
+    emit_store(irc, assign->value, assign->symbol_ref);
+}
+
+static void generate_if(IRContext* irc, ASTNode* node)
+{
+    ASTIfStmt* if_stmt = (ASTIfStmt*)node;
+    IROperand* cond = generate_expression(irc, if_stmt->condition);
+
+    unsigned true_label = new_label(irc);
+    unsigned false_label = new_label(irc);
+    unsigned end_label = new_label(irc);
+
+    emit_inst(irc, IR_BRANCH, (IROperand){0}, *cond, (IROperand){0}, true_label);
+    emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, false_label);
+
+    emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, true_label);
+    generate_statement(irc, (ASTNode*)if_stmt->then_block);
+
+    if(if_stmt->else_block) {
+        emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, end_label);
+        emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, false_label);
+        generate_statement(irc, if_stmt->else_block);
+        emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, end_label);
+    } else {
+        emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, false_label);
+    }
+}
+
+static void generate_while(IRContext* irc, ASTNode* node)
+{
+    ASTWhileStmt* while_stmt = (ASTWhileStmt*)node;
+
+     unsigned loop_label = new_label(irc);
+     unsigned exit_label = new_label(irc);
+
+     emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, loop_label);
+
+     IROperand* cond = generate_expression(irc, while_stmt->condition);
+
+     IROperand* zero = make_operand_const(irc, 0);
+     int eq_temp = mew_temp(irc);
+    IROperand* eq_op = make_operand_temp(irc, eq_temp);
+
+    emit_inst(irc, IR_CMP_EQ, *eq_op, *cond, *zero, 0);
+
+    generate_statement(irc, while_stmt->body);
+    emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, loop_label);
+    emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, exit_label);
+}
+
+
+static void generate_print(IRContext* irc, ASTNode* node)
+{
+    ASTPrintStmt* print_stmt = (ASTPrintStmt*)node;
+    IROperand* val = generate_expression(irc, print_stmt->expression);
+    emit_inst(irc, IR_PRINT, (IROperand){0}, *val, (IROperand){0}, 0);
+}
+
+
+static void generate_block(IRContext* irc, ASTNode* node)
+{
+    ASTBlock* block = (ASTBlock*)node;
+    ASTBlockStmt* current = block->first;
+    while(current)
+    {
+        generate_statement(irc, current->node);
+        current = current->next;
+    }
+}
+//==========================
+
+
+//Expression dispatcher
 static IROperand* generate_expression(IRContext* irc, ASTNode* expr)
 {
     switch(expr->type)
     {
-        case AST_EXPR_NUMBER :
+        case AST_EXPR_NUMBER:
             return generate_expression_number(irc, expr);
             break;
 
-        case AST_EXPR_IDENT :
+        case AST_EXPR_IDENT:
             return generate_expression_ident(irc, expr);
             break;
 
-        case AST_EXPR_BINARY :
+        case AST_EXPR_BINARY:
             return generate_expression_binary(irc, expr);
             break;
     }
 }
 
 
-static void generate_statement(ASTNode* stmt)
+//Statement dispatcher
+static void generate_statement(IRContext* irc, ASTNode* stmt)
 {
     switch(stmt->type)
     {
         case AST_STMT_VARDECL:
-            generate_declaration();
+            generate_declaration(irc, stmt);
             break;
 
         case AST_STMT_ASSIGNMENT:
-            generate_assignment();
+            generate_assignment(irc, stmt);
             break;
 
         case AST_STMT_IF:
-            generate_if();
+            generate_if(irc, stmt);
             break;
 
         case AST_STMT_WHILE:
-            generate_while();
+            generate_while(irc, stmt);
             break;
 
         case AST_STMT_PRINT:
-            generate_print();
+            generate_print(irc, stmt);
             break;
 
         case AST_STMT_EXPR:
-            generate_expression();
+            generate_expression(irc, stmt);
             break;
 
         case AST_STMT_BLOCK:
-            //???
+            generate_block(irc, stmt);
             break;
     }
 }
