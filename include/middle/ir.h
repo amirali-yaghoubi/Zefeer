@@ -4,14 +4,6 @@
 
 
 
-typedef struct {
-    IRInstruction *data;
-    size_t size;
-    size_t capacity;
-} IRInstructionVec;
-
-
-
 typedef enum {
     IR_CONST,
     IR_MOVE,
@@ -66,6 +58,15 @@ typedef struct {
     unsigned label;
 } IRInstruction;
 
+
+
+typedef struct {
+    IRInstruction *data;
+    size_t size;
+    size_t capacity;
+} IRInstructionVec;
+
+
 typedef struct {
     Arena* arena;
     IRInstructionVec instructions_vector;
@@ -77,7 +78,7 @@ typedef struct {
 } IRContext;
 
 
-
+void ir_print(IRContext* irc);
 void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast);
 void ir_vec_free(IRInstructionVec *vec);
 void ir_generate(IRContext* irc);

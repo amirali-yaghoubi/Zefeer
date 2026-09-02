@@ -1,12 +1,72 @@
 #include "middle/ir.h"
 #include "common/arena.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
 
+//====Debug Helpers====
+static const char* opcode_to_string(IROpCode op) {
+    switch(op) {
+        case IR_CONST: return "CONST";
+        case IR_MOVE:  return "MOVE";
+        case IR_ADD:   return "ADD";
+        case IR_SUB:   return "SUB";
+        case IR_MUL:   return "MUL";
+        case IR_DIV:   return "DIV";
+        case IR_CMP_EQ: return "CMP_EQ";
+        case IR_CMP_NE: return "CMP_NE";
+        case IR_CMP_LT: return "CMP_LT";
+        case IR_CMP_GT: return "CMP_GT";
+        case IR_CMP_LE: return "CMP_LE";
+        case IR_CMP_GE: return "CMP_GE";
+        case IR_BRANCH: return "BRANCH";
+        case IR_JUMP:   return "JUMP";
+        case IR_PRINT:  return "PRINT";
+        case IR_LABEL:  return "LABEL";
+        default: return "UNKNOWN";
+    }
+}
 
+static void print_operand(IROperand op) {
+    switch(op.type) {
+        case IR_OPERAND_CONST: printf("%d", op.value); break;
+        case IR_OPERAND_VAR:   printf("v_%s", op.symbol->name); break;
+        case IR_OPERAND_TEMP:  printf("t%d", op.temp); break;
+        default: printf("?");
+    }
+}
 
+static IRInstruction* ir_vec_get(IRInstructionVec *vec, size_t index);
+void ir_print(IRContext* irc) {
+    printf("\n=== IR Instructions ===\n");
+    for (size_t i = 0; i < irc->instructions_vector.size; i++) {
+        IRInstruction* inst = ir_vec_get(&irc->instructions_vector, i);
+        printf("%3zu: %s ", i, opcode_to_string(inst->op_code));
+        if (inst->op_code == IR_LABEL) {
+            printf("L%d", inst->label);
+        } else if (inst->op_code == IR_BRANCH || inst->op_code == IR_JUMP) {
+            if (inst->op_code == IR_BRANCH) {
+                print_operand(inst->src_1);
+                printf(" -> ");
+            }
+            printf("L%d", inst->label);
+        } else {
+            if (inst->dst.type != IR_OPERAND_CONST || inst->dst.value != 0) {
+                print_operand(inst->dst);
+                printf(" = ");
+            }
+            print_operand(inst->src_1);
+            if (inst->src_2.type != IR_OPERAND_CONST || inst->src_2.value != 0) {
+                printf(", ");
+                print_operand(inst->src_2);
+            }
+        }
+        printf("\n");
+    }
+}
+//====             ====
 //====Vector====
 static void ir_vec_resize(IRInstructionVec *vec, size_t new_cap)
 {
@@ -114,6 +174,7 @@ static void emit_inst(IRContext* irc, IROpCode op, IROperand dst, IROperand src1
 }
 
 
+static IROperand* generate_expression(IRContext* irc, ASTNode* expr);
 static void emit_store(IRContext* irc, ASTNode* expr, Symbol* sym)
 {
     IROperand* rhs = generate_expression(irc, expr);
@@ -127,7 +188,6 @@ static void emit_store(IRContext* irc, ASTNode* expr, Symbol* sym)
 
 
 //====Expression Helpers====
-
 static IROperand* generate_expression_number(IRContext* irc, ASTNode* node)
 {
     ASTNumberExpr* num = (ASTNumberExpr*)node;
@@ -192,7 +252,7 @@ static void generate_statement(IRContext* irc, ASTNode* stmt);
 static void generate_if(IRContext* irc, ASTNode* node)
 {
     ASTIfStmt* if_stmt = (ASTIfStmt*)node;
-    IROperand* cond = generate_expression(irc, if_stmt->condition);
+    IROperand* cond = generate_expression(irc, (ASTNode*)if_stmt->condition);
 
     unsigned true_label = new_label(irc);
     unsigned false_label = new_label(irc);
@@ -207,7 +267,7 @@ static void generate_if(IRContext* irc, ASTNode* node)
     if(if_stmt->else_block) {
         emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, end_label);
         emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, false_label);
-        generate_statement(irc, if_stmt->else_block);
+        generate_statement(irc, (ASTNode*)if_stmt->else_block);
         emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, end_label);
     } else {
         emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, false_label);
@@ -228,11 +288,10 @@ static void generate_while(IRContext* irc, ASTNode* node)
      IROperand* zero = make_operand_const(irc, 0);
      int eq_temp = new_temp(irc);
     IROperand* eq_op = make_operand_temp(irc, eq_temp);
-
     emit_inst(irc, IR_CMP_EQ, *eq_op, *cond, *zero, 0);
     emit_inst(irc, IR_BRANCH, (IROperand){0}, *eq_op, (IROperand){0}, exit_label);
 
-    generate_statement(irc, while_stmt->body);
+    generate_statement(irc, (ASTNode*)while_stmt->body);
     emit_inst(irc, IR_JUMP, (IROperand){0}, (IROperand){0}, (IROperand){0}, loop_label);
     emit_inst(irc, IR_LABEL, (IROperand){0}, (IROperand){0}, (IROperand){0}, exit_label);
 }
