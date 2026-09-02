@@ -310,3 +310,9 @@ static void generate_statement(IRContext* irc, ASTNode* stmt)
             break;
     }
 }
+
+
+void ir_generate(IRContext* irc)
+{
+    generate_statement(irc, irc->ast);
+}

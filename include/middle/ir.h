@@ -80,3 +80,4 @@ typedef struct {
 
 void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast);
 void ir_vec_free(IRInstructionVec *vec);
+void ir_generate(IRContext* irc);
