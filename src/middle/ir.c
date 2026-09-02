@@ -224,7 +224,7 @@ static void generate_while(IRContext* irc, ASTNode* node)
      IROperand* cond = generate_expression(irc, while_stmt->condition);
 
      IROperand* zero = make_operand_const(irc, 0);
-     int eq_temp = mew_temp(irc);
+     int eq_temp = new_temp(irc);
     IROperand* eq_op = make_operand_temp(irc, eq_temp);
 
     emit_inst(irc, IR_CMP_EQ, *eq_op, *cond, *zero, 0);
