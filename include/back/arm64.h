@@ -11,5 +11,5 @@ typedef struct {
     int frame_size;
 } ARM64Context;
 
-void arm64_init(ARM64Context* ctx, IRContext* irc, const char* file_name);
 
+void arm64_generate(IRContext* irc, const char* filename);
