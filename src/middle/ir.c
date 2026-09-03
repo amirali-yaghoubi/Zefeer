@@ -111,13 +111,14 @@ void ir_vec_free(IRInstructionVec *vec)
 //====      ====
 
 
-void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast)
+void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast, SemanticContext* ctx)
 {
     irc->arena = a;
     ir_vec_init(&irc->instructions_vector);
     irc->next_temp = 0;
     irc->next_label = 0;
     irc->ast = ast;
+    irc->ctx = ctx;
 }
 
 

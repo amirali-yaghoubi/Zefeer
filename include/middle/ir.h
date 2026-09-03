@@ -75,10 +75,12 @@ typedef struct {
     int next_label;
     
     ASTNode* ast;
+
+    SemanticContext* ctx;
 } IRContext;
 
 
 void ir_print(IRContext* irc);
-void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast);
+void ir_context_init(IRContext* irc, Arena* a, ASTNode* ast, SemanticContext* ctx);
 void ir_vec_free(IRInstructionVec *vec);
 void ir_generate(IRContext* irc);

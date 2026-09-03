@@ -52,7 +52,7 @@ int main()
     
     
     IRContext irc = {0};
-    ir_context_init(&irc, &ir_arena, ast);
+    ir_context_init(&irc, &ir_arena, ast, &ctx);
 
     ir_generate(&irc);
     
