@@ -70,7 +70,7 @@ static Symbol* lookup_all(SemanticContext* ctx, const char* name)
           if(strcmp(current->name, name) == 0)
             return current;
             
-            current = current->next;
+        current = current->next;
         }
         
         scope = scope->parent;
