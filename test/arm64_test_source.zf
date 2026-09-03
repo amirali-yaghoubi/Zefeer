@@ -1,0 +1,11 @@
+let x : int = 3;
+let y : int = 8;
+
+if(x > y - 5 * (9 - 7))
+{
+    let i : int = 0;
+    while(i < 4)
+    {
+        print(i);
+    }
+}
