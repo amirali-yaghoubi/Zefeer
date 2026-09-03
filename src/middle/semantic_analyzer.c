@@ -129,6 +129,27 @@ static void analyze_binary_expr(ASTNode* node, SemanticContext* ctx)
         };
         diagnostic_report(&dc, ERR_INVALID_EXPRESSION_RIGHT);
     }
+
+    if (bin->op.type == TOK_DIVIDE)
+    {
+        if (bin->rhs->type == AST_EXPR_NUMBER)
+        {
+            ASTNumberExpr* num = (ASTNumberExpr*)bin->rhs;
+            if (num->token.value.int_value == 0)
+            {
+                ctx->has_error = true;
+                DiagnosticContext dc = {
+                    .has_error = true,
+                    .type = DIAG_ERROR,
+                    .note = NULL,
+                    .line = (long)bin->op.line,
+                    .file_name = bin->op.file_name
+                };
+                diagnostic_report(&dc, ERR_DIVISION_BY_ZERO);
+            }
+        }
+    }
+
     bin->base.resolved_type = TYPE_INT; // must be changed if we gonna have more than 1 type later
 }
 
