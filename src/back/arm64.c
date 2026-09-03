@@ -206,7 +206,7 @@ void arm64_generate(IRContext* irc, const char* filename)
                         fprintf(ctx.out, "    mov w1, #%d\n", op.value);
                         break;
                     case IR_OPERAND_VAR:
-                        fprintf(ctx.out, "    ldr w1, [sp, #%d]\n", get_var_offset(&ctx, op.symbol->var_id));
+                        fprintf(ctx.out, "    ldr w1, [sp, #%d]\n", get_var_offset(op.symbol->var_id));
                         break;
                     case IR_OPERAND_TEMP:
                         fprintf(ctx.out, "    ldr w1, [sp, #%d]\n", get_temp_offset(&ctx, op.temp));
