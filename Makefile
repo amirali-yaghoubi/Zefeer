@@ -1,52 +1,65 @@
-# Compiler and flags
-CC          = clang
-CFLAGS      = -Wall -Wextra -std=c11 -g -I include
-LDFLAGS     =
+C       = gcc
+CFLAGS   = -Wall -Wextra -Iinclude -g
+LDFLAGS  =
+DEPFLAGS = -MMD -MP
 
-# Main directories
-SRC_DIR     = src
-BUILD_DIR   = build
-INC_DIR     = include
+SRC_DIR   = src
+OBJ_DIR   = build/obj
+BIN_DIR   = build
+TEST_DIR  = test
 
-# Final output name
-TARGET      = $(BUILD_DIR)/main
+# Collect all .c files from src/ except main.c
+SOURCES  = $(shell find $(SRC_DIR) -name "*.c" ! -name "main.c")
+OBJS     = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
 
-# Find all .c files in src and its subdirectories (back, front, middle, ...)
-SRCS        = $(shell find $(SRC_DIR) -type f -name "*.c")
+# Main program
+MAIN_OBJ = $(OBJ_DIR)/main.o
+TARGET   = $(BIN_DIR)/zfc
 
-# Convert .c paths to .o paths inside build folder (folder structure is preserved)
-OBJS        = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
+# Test binaries (all *_test.c in test/)
+TESTS    = $(wildcard $(TEST_DIR)/*_test.c)
+TEST_TARGETS = $(patsubst $(TEST_DIR)/%.c, $(BIN_DIR)/%, $(TESTS))
 
-# Generate .d files for header dependencies (placed next to each .o file)
-DEPS        = $(OBJS:.o=.d)
+# ------------------------------------------------------------
+# Explicit targets
+# ------------------------------------------------------------
+.PHONY: all tests main lexer_test parser_test sa_test ir_test arm64_test re clean
 
-# Default target (everything)
-all: $(TARGET)
+all: main tests
 
-# Link all object files into the final executable
-$(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $^
-	@echo "✅ Build successful! Run ./$(TARGET)"
+tests: $(TEST_TARGETS)
 
-# Compile each .c file to .o inside build/ and create necessary subdirectories
-# -MMD and -MP automatically create .d files that track #include dependencies
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+main: $(TARGET)
 
-# Quick execution (for testing)
-run: $(TARGET)
-	./$(TARGET)
+lexer_test: $(BIN_DIR)/lexer_test
+parser_test: $(BIN_DIR)/parser_test
+sa_test: $(BIN_DIR)/semantic_analyzer_test
+ir_test: $(BIN_DIR)/ir_test
+arm64_test: $(BIN_DIR)/arm64_test
 
-# Full cleanup: remove object files, dependency files, and output
-clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+re: clean all
 
-# Clean and rebuild from scratch
-rebuild: clean all
-
-# Include generated dependency files (so header changes are tracked)
+# ------------------------------------------------------------
+# Build rules
+# ------------------------------------------------------------
+# Include generated dependency files
+DEPS = $(OBJS:.o=.d) $(MAIN_OBJ:.o=.d)
 -include $(DEPS)
 
-# Phony targets (not actual files)
-.PHONY: all clean rebuild run
+# Link main executable
+$(TARGET): $(MAIN_OBJ) $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -o $@
+
+# Compile any .c file from src/ (including main.c)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+# Build any test binary (links with all .o files except main.o)
+$(BIN_DIR)/%: $(TEST_DIR)/%.c $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $< $(OBJS) -o $@
+
+clean:
+	rm -rf build
