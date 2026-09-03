@@ -1,0 +1,137 @@
+let n : int = 10;
+let a : int = 0;
+let b : int = 1;
+let c : int = 0;
+let i : int = 2;
+while (i <= n) {
+    c = a + b;
+    a = b;
+    b = c;
+    i = i + 1;
+}
+print(c);
+
+let fact : int = 1;
+i = 1;
+while (i <= n) {
+    fact = fact * i;
+    i = i + 1;
+}
+print(fact);
+
+let sum : int = 0;
+i = 1;
+while (i <= 100) {
+    sum = sum + i;
+    i = i + 1;
+}
+print(sum);
+
+let x : int = 5;
+let y : int = 10;
+let z : int = (x + y) * (y - x) / 2;
+print(z);
+
+if (x < y) {
+    print(x);
+} else {
+    print(y);
+}
+
+let p : int = 0;
+let q : int = 1;
+while (p < 10) {
+    p = p + 1;
+    q = q * 2;
+}
+print(q);
+
+let r : int = 100;
+let s : int = 50;
+let t : int = (r - s) * 3 + r / s;
+print(t);
+
+let u : int = 7;
+let v : int = 3;
+let w : int = (u + v) * (u - v);
+print(w);
+
+if (w > 20) {
+    print(1);
+} else {
+    print(0);
+}
+
+let m : int = 0;
+let n2 : int = 0;
+while (m < 5) {
+    n2 = n2 + m;
+    m = m + 1;
+}
+print(n2);
+
+let a2 : int = 8;
+let b2 : int = 12;
+let c2 : int = a2 * b2 + a2 / b2 - (b2 - (b2 / a2) * a2);
+print(c2);
+
+let count : int = 0;
+let total : int = 0;
+while (count < 20) {
+    count = count + 1;
+    if (count - (count / 2) * 2 == 0) {
+        total = total + count;
+    } else {
+        total = total - count;
+    }
+}
+print(total);
+
+let age : int = 25;
+if (age >= 18) {
+    if (age < 65) {
+        print(1);
+    } else {
+        print(2);
+    }
+} else {
+    print(0);
+}
+
+let var1 : int = 0;
+var1 = 100;
+let var2 : int = var1 * 2;
+print(var2);
+var1 = var1 + 50;
+print(var1);
+
+let limit : int = 30;
+let step : int = 0;
+while (step * step < limit) {
+    step = step + 1;
+}
+print(step);
+
+let base : int = 2;
+let power : int = 1;
+let exponent : int = 5;
+let counter : int = 0;
+while (counter < exponent) {
+    power = power * base;
+    counter = counter + 1;
+}
+print(power);
+
+let eq1 : int = 10;
+let eq2 : int = 20;
+if (eq1 == eq2) {
+    print(99);
+} else {
+    print(88);
+}
+
+let big : int = (((1 + 2) * (3 + 4)) - ((5 + 6) * (7 + 8))) / 2;
+print(big);
+
+let last : int = 0;
+print(last);
