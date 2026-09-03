@@ -19,6 +19,18 @@ Status: v0.1.0 released — stable
 1. ```make main```
 2. ```./build/zfc YOUR_SOURCE_CODE_NAME.zf```
 
+## Running on non-ARM64 systems
+Zefeer generates ARM64 assembly.
+On x86_64 Linux, you can use QEMU:
+
+### Installing the dependencies
+```
+sudo apt install gcc-aarch64-linux-gnu qemu-user
+```
+
+### Running
+1. ```aarch64-linux-gnu-gcc <ASSEMBLY_FILE_NAME>.s -o <OUTPUT_FILE_NAME>```
+2. ```qemu-aarch64 ./<OUTPUT_FILE_NAME>```
 
 ## Build
 Ubuntu / Debian:
@@ -71,15 +83,15 @@ make re
 ## Run
 ### The Compiler(zfc)
 ```
-./build/zfc YOUR_SOURCE_CODE_NAME.zf
+./build/zfc <YOUR_SOURCE_CODE_NAME>.zf
 ```
 Or
 ```
-./build/zfc YOUR_SOURCE_CODE_NAME.zf -o OUTPUT_FILE_NAME.s
+./build/zfc <YOUR_SOURCE_CODE_NAME>.zf -o <OUTPUT_FILE_NAME>.s
 ```
 Or
 ```
-./build/zfc -o OUTPUT_FILE_NAME.s YOUR_SOURCE_CODE_NAME.zf
+./build/zfc -o <OUTPUT_FILE_NAME>.s <YOUR_SOURCE_CODE_NAME>.zf
 ```
 
 ### The tests
