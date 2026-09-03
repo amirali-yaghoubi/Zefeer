@@ -1,10 +1,27 @@
-let x : int = 8;
-let x : int = 56;
-
-m = 3;
-
-
-if(y >= 5)
-{
-    print(4 - 7 * 7);
+let x : int = 5;
+let y : int = x + z;
+print(y);
+let x : int = 10;
+let a : int = 3;
+a = a + 1;
+let b : int = a * 2;
+print(b);
+let c : int = 0;
+c = c + 1;
+let d : int = 4;
+let e : int = d + c;
+print(e);
+let f : int = g * 2;
+let g : int = 1;
+print(f);
+if (x > y) {
+    print(x);
+} else {
+    print(y);
 }
+while (a < 10) {
+    a = a + 1;
+    print(a);
+}
+let h : int = 100;
+print(h);
