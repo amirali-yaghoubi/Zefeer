@@ -198,6 +198,8 @@ static void analyze_expression(ASTNode* node, SemanticContext* ctx)
         case AST_EXPR_IDENT:
             analyze_ident_expr(node, ctx);
             break;
+        default:
+            break;
     }
 }
 
@@ -351,6 +353,10 @@ static void analyze_statement(ASTNode* node, SemanticContext* ctx)
 
         case AST_STMT_BLOCK:
             analyze_block(node, ctx);
+            break;
+        
+        default:
+            break;
     }
 
 }
