@@ -133,7 +133,7 @@ static void analyze_binary_expr(ASTNode* node, SemanticContext* ctx)
 
 
 
-static void analyze_number_expr(ASTNode* node, SemanticContext* ctx)
+static void analyze_number_expr(ASTNode* node)
 {
     ASTNumberExpr* num = (ASTNumberExpr*)node;
     num->base.resolved_type = TYPE_INT; // must be changed if we gonna have more than 1 type later
@@ -192,7 +192,7 @@ static void analyze_expression(ASTNode* node, SemanticContext* ctx)
             break;
 
         case AST_EXPR_NUMBER:
-            analyze_number_expr(node, ctx);
+            analyze_number_expr(node);
             break;
 
         case AST_EXPR_IDENT:

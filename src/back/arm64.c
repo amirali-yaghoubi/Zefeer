@@ -9,34 +9,39 @@
 
 //====Helpers====
 
-static int get_var_offset(ARM64Context* ctx, int var_id) {
+static int get_var_offset(int var_id)
+{
     return var_id * 4;
 }
 
-static int get_temp_offset(ARM64Context* ctx, int temp_id) {
+static int get_temp_offset(ARM64Context* ctx, int temp_id)
+{
     return (ctx->num_vars + temp_id) * 4;
 }
 
 
-static void emit_prologue(ARM64Context* ctx) {
+static void emit_prologue(ARM64Context* ctx)
+{
     fprintf(ctx->out, "    str x30, [sp, #-16]!\n");
     fprintf(ctx->out, "    sub sp, sp, #%d\n", ctx->frame_size);
 }
 
-static void emit_epilogue(ARM64Context* ctx) {
+static void emit_epilogue(ARM64Context* ctx)
+{
     fprintf(ctx->out, "    add sp, sp, #%d\n", ctx->frame_size);
     fprintf(ctx->out, "    ldr x30, [sp], #16\n");
     fprintf(ctx->out, "    ret\n");
 }
 
 
-static void emit_load_operand(ARM64Context* ctx, IROperand op) {
+static void emit_load_operand(ARM64Context* ctx, IROperand op) 
+{
     switch (op.type) {
         case IR_OPERAND_CONST:
             fprintf(ctx->out, "    mov w0, #%d\n", op.value);
             break;
         case IR_OPERAND_VAR:
-            fprintf(ctx->out, "    ldr w0, [sp, #%d]\n", get_var_offset(ctx, op.symbol->var_id));
+            fprintf(ctx->out, "    ldr w0, [sp, #%d]\n", get_var_offset(op.symbol->var_id));
             break;
         case IR_OPERAND_TEMP:
             fprintf(ctx->out, "    ldr w0, [sp, #%d]\n", get_temp_offset(ctx, op.temp));
@@ -46,13 +51,14 @@ static void emit_load_operand(ARM64Context* ctx, IROperand op) {
     }
 }
 
-static void emit_load_operand_to_w1(ARM64Context* ctx, IROperand op) {
+static void emit_load_operand_to_w1(ARM64Context* ctx, IROperand op)
+{
     switch (op.type) {
         case IR_OPERAND_CONST:
             fprintf(ctx->out, "    mov w1, #%d\n", op.value);
             break;
         case IR_OPERAND_VAR:
-            fprintf(ctx->out, "    ldr w1, [sp, #%d]\n", get_var_offset(ctx, op.symbol->var_id));
+            fprintf(ctx->out, "    ldr w1, [sp, #%d]\n", get_var_offset(op.symbol->var_id));
             break;
         case IR_OPERAND_TEMP:
             fprintf(ctx->out, "    ldr w1, [sp, #%d]\n", get_temp_offset(ctx, op.temp));
@@ -62,10 +68,11 @@ static void emit_load_operand_to_w1(ARM64Context* ctx, IROperand op) {
     }
 }
 
-static void emit_store_dest(ARM64Context* ctx, IROperand dst) {
+static void emit_store_dest(ARM64Context* ctx, IROperand dst)
+{
     switch (dst.type) {
         case IR_OPERAND_VAR:
-            fprintf(ctx->out, "    str w0, [sp, #%d]\n", get_var_offset(ctx, dst.symbol->var_id));
+            fprintf(ctx->out, "    str w0, [sp, #%d]\n", get_var_offset(dst.symbol->var_id));
             break;
         case IR_OPERAND_TEMP:
             fprintf(ctx->out, "    str w0, [sp, #%d]\n", get_temp_offset(ctx, dst.temp));
@@ -79,7 +86,8 @@ static void emit_store_dest(ARM64Context* ctx, IROperand dst) {
 
 
 // Main generate function
-void arm64_generate(IRContext* irc, const char* filename) {
+void arm64_generate(IRContext* irc, const char* filename)
+{
     // ---- 1. Compute max temp ----
     int max_temp = 0;
     for (size_t i = 0; i < irc->instructions_vector.size; i++) {
