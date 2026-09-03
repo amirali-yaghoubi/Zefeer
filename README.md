@@ -1,29 +1,107 @@
 # Zefeer
 
 ## Overview
-A small C-like compiled language written in C for learing Compiler design as a hobby
+Zefeer is a simple C-like compiled programming language. The compiler is written entirely in C, from scratch.
 
 ## Status
-Mid development. Not stable.
+Status: v0.1.0 released — stable
 
-## Goals
-- Simple Lexer + Parser + IR
-- ARM64 Code generation
-- Minimal C-like syntax (integer declaration and assignment, if/else, while loop and a simple print)
+## Features
 
-## Current progress
-- Lexer is done
-- A linked-block arena allocator implemented
-- Parser is done
-- Semantic Analyzer is done
-- IR in progress
+- Integer variables
+- `if` / `else`
+- `while` loop
+- Semantic analysis
+- Intermediate representation
+- ARM64 assembly generation (Linux)
+
+## How to run (the straightforward and standard way)(Linux)
+1. ```make main```
+2. ```./build/zfc YOUR_SOURCE_CODE_NAME.zf```
+
 
 ## Build
-(to be added)
+Ubuntu / Debian:
+### Build all(main + tests)
+```
+make
+```
+Or
+```
+make all
+```
+
+### Build the compiler alone
+```
+make main
+```
+
+### Build all tests
+```
+make tests
+```
+
+#### Build each test individually
+```
+make lexer_test
+```
+```
+make parser_test
+```
+```
+make sa_test
+```
+```
+make ir_test
+```
+```
+make arm64_test
+```
+
+### Clean(remove) the build directory
+```
+make clean
+```
+
+### Clean + Re-build all
+```
+make re
+```
+
+## Run
+### The Compiler(zfc)
+```
+./build/zfc YOUR_SOURCE_CODE_NAME.zf
+```
+Or
+```
+./build/zfc YOUR_SOURCE_CODE_NAME.zf -o OUTPUT_FILE_NAME.s
+```
+Or
+```
+./build/zfc -o OUTPUT_FILE_NAME.s YOUR_SOURCE_CODE_NAME.zf
+```
+
+### The tests
+```
+./build/lexer_test
+```
+```
+./build/parser_test
+```
+```
+./build/semantic_analyzer_test
+```
+```
+./build/ir_test
+```
+```
+./build/arm64_test
+```
 
 ## Development Environment
 
-- **OS:** Ubuntu 24.04 (x86_64)
+- **OS:** Ubuntu 24.04 (x86_64)[WSL2]
 - **Build System:** GNU Make
 
 ---
