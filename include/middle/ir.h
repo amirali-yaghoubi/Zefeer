@@ -1,3 +1,4 @@
+#pragma once
 #include "middle/semantic_analyzer.h"
 #include "common/arena.h"
 #include "front/parser.h"
