@@ -1,12 +1,105 @@
-let x : int = 3;
-let y : int = 8;
+let n : int = 5;
+let i : int = 1;
+let fact : int = 1;
+let sum : int = 0;
+let a : int = 10;
+let b : int = 20;
+let c : int = 0;
+let result : int = 0;
 
-if(x > y - 5 * (9 - 7))
-{
-    let i : int = 0;
-    while(i < 4)
-    {
-        print(i);
-        i = i + 1;
+while (i <= n) {
+    fact = fact * i;
+    i = i + 1;
+}
+print(fact);
+
+i = 1;
+sum = 0;
+while (i <= 10) {
+    sum = sum + i;
+    i = i + 1;
+}
+print(sum);
+
+if (a > b) {
+    print(a);
+} else {
+    print(b);
+}
+
+c = (a + b) * (b - a) / 2;
+print(c);
+
+let num : int = 17;
+if (num / 2 * 2 == num) {
+    print(0);
+} else {
+    print(1);
+}
+
+let flag : int = 0;
+i = 0;
+while (flag == 0) {
+    i = i + 1;
+    if (i == 5) {
+        flag = 1;
+    } else {
     }
 }
+print(i);
+
+result = (a + b) - (c / 3) * 2;
+print(result);
+
+let x : int = 7;
+let y : int = 12;
+if (x < y) {
+    if (x > 0) {
+        print(x);
+    } else {
+        print(0);
+    }
+} else {
+    print(y);
+}
+
+n = 6;
+i = 1;
+fact = 1;
+while (i <= n) {
+    fact = fact * i;
+    i = i + 1;
+}
+if (fact > 100) {
+    print(fact);
+} else {
+    print(fact);
+}
+
+let p : int = 100;
+let q : int = 3;
+let r : int = (p / q) * q + (p - (p / q) * q);
+print(r);
+
+i = 0;
+while (i < 5) {
+    print(i);
+    i = i + 1;
+}
+
+let test : int = 42;
+if (test == 42) {
+    print(123);
+}
+
+i = 0;
+while (i * i < 50) {
+    i = i + 1;
+}
+print(i);
+
+let m : int = 2;
+let n2 : int = 3;
+let o : int = 4;
+let res : int = (m + n2) * o - (m * n2) / o + (o - m);
+print(res);
