@@ -74,7 +74,8 @@ static Symbol* lookup_all(SemanticContext* ctx, const char* name)
         }
         
         scope = scope->parent;
-    }   
+    }
+    return NULL;
 }
 
 

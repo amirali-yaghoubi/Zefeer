@@ -48,7 +48,9 @@ static bool check(Parser* p, TokenType type)
 }
 
 
-static bool match(Parser* p, TokenType type)
+// Unused so I commented it to silent the compiler
+
+/*static bool match(Parser* p, TokenType type)
 {
     if (check(p, type))
     {
@@ -56,7 +58,7 @@ static bool match(Parser* p, TokenType type)
         return true;
     }
     return false;
-}
+}*/
 
 
 static Token expect(Parser* p, TokenType type)
@@ -399,7 +401,6 @@ static ASTNode* parse_statement(Arena* a, Parser* p)
     const char* type = token_type_to_str(p->current.type);
 
     diagnostic_report(&dc, ERR_UNEXPECTED_TOKEN, type);
-    long line = p->current.line;
     exit(1);
 }
 

@@ -91,10 +91,12 @@ static void ir_vec_push(IRInstructionVec *vec, IRInstruction val)
     vec->data[vec->size++] = val;
 }
 
-static IRInstruction ir_vec_pop(IRInstructionVec *vec)
+// Never used so I commented it to silent the compiler
+
+/*static IRInstruction ir_vec_pop(IRInstructionVec *vec)
 {
     return vec->data[--vec->size];
-}
+}*/
 
 static IRInstruction *ir_vec_get(IRInstructionVec *vec, size_t index)
 {
@@ -227,6 +229,7 @@ static IROperand* generate_expression_binary(IRContext* irc, ASTNode* node)
         case TOK_LESS_EQUAL : opcode = IR_CMP_LE; break;
         case TOK_GREATER : opcode = IR_CMP_GT; break;
         case TOK_LESS : opcode = IR_CMP_LT; break;
+        default: break;
     }
     emit_inst(irc, opcode, *dst, *left, *right, 0);
     return dst;
@@ -335,6 +338,10 @@ static IROperand* generate_expression(IRContext* irc, ASTNode* expr)
         case AST_EXPR_BINARY:
             return generate_expression_binary(irc, expr);
             break;
+        
+        default:
+            return NULL;
+            break;
     }
 }
 
@@ -370,6 +377,9 @@ static void generate_statement(IRContext* irc, ASTNode* stmt)
 
         case AST_STMT_BLOCK:
             generate_block(irc, stmt);
+            break;
+        
+        default:
             break;
     }
 }
