@@ -56,6 +56,7 @@ int main()
 
     ir_generate(&irc);
     
+    printf("==========Source code==========\n\n%s\n\n", source);
     ir_print(&irc);
 
 

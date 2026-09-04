@@ -45,7 +45,7 @@ int main()
         return 1;
     }
 
-    printf("The defualt test source is wrong and if you see Errors, the SA is working properly\n");
+    printf("==========Source code==========\n\n%s\n\n===============================\n\n", source);
     if(!analyze_program(ast, &ctx))
         return 1;
 

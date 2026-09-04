@@ -42,6 +42,7 @@ int main()
         return 1;
     }
 
+    printf("==========Source code==========\n\n%s\n\n", source);
     printf("\n========== AST ==========\n\n");
     print_ast(ast, 0);
     printf("\n=========================\n");

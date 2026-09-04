@@ -60,6 +60,7 @@ int main()
     ir_generate(&irc);
     
    arm64_generate(&irc, output_file_name);
+   printf("==========Source code==========\n\n%s\n\n===============================\n\n", source);
    printf("Results in %s\n", output_file_name);
 
 
