@@ -96,10 +96,12 @@ sudo apt install gcc-aarch64-linux-gnu qemu-user
 ```
 
 ### Running
-1. ```bash
+1.
+```bash
 aarch64-linux-gnu-gcc <ASSEMBLY_FILE_NAME>.s -o <OUTPUT_FILE_NAME>
 ```
-2. ```bash
+2.
+```bash
 qemu-aarch64 ./<OUTPUT_FILE_NAME>
 ```
 
