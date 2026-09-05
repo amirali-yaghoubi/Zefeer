@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
 
     if(!analyze_program(ast, &ctx))
     {
-        printf(stderr, "Semantic analysis failed\n");
+        fprintf(stderr, "Semantic analysis failed\n");
         arena_free(&reader_arena);
         arena_free(&parser_arena);
         arena_free(&semantic_analyzer_arena);
