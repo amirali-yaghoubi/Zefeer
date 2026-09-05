@@ -30,6 +30,10 @@ int main()
     if (!source)
     {
         fprintf(stderr, "Failed to read %s\n", source_path);
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
+        arena_free(&ir_arena);
         return 1;
     }
 
@@ -47,11 +51,22 @@ int main()
     if (!ast)
     {
         fprintf(stderr, "Parsing failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
+        arena_free(&ir_arena);
         return 1;
     }
 
     if(!analyze_program(ast, &ctx))
+    {
+        printf(stderr, "Semantic analysis failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
+        arena_free(&ir_arena);
         return 1;
+    }
     
     
     IRContext irc = {0};

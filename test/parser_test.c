@@ -38,6 +38,8 @@ int main()
 
     if (!ast) {
         fprintf(stderr, "Parsing failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
         arena_free(&visualizer_arena);
         return 1;
     }

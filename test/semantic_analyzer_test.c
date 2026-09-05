@@ -26,6 +26,9 @@ int main()
     if (!source)
     {
         fprintf(stderr, "Failed to read %s\n", source_path);
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
         return 1;
     }
 
@@ -42,12 +45,21 @@ int main()
     ASTNode* ast = parse_program(&parser_arena, &parser);
     if (!ast) {
         fprintf(stderr, "Parsing failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
         return 1;
     }
 
     printf("==========Source code==========\n\n%s\n\n===============================\n\n", source);
     if(!analyze_program(ast, &ctx))
+    {
+        printf(stderr, "Semantic analysis failed\n");
+        arena_free(&reader_arena);
+        arena_free(&parser_arena);
+        arena_free(&semantic_analyzer_arena);
         return 1;
+    }
 
     
     arena_free(&reader_arena);
