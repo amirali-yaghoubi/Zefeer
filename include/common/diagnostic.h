@@ -15,6 +15,7 @@
 #define ERR_INVALID_EXPRESSION_RIGHT "invalid right side expression"
 #define ERR_TYPE_MISMATCH "types for left and right side are mismatched"
 #define ERR_DIVISION_BY_ZERO "can not divide by zero"
+#define ERR_INTERNAL "internal error happend"
 
 
 

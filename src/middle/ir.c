@@ -1,5 +1,6 @@
 #include "middle/ir.h"
 #include "common/arena.h"
+#include "common/diagnostic.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -229,7 +230,17 @@ static IROperand* generate_expression_binary(IRContext* irc, ASTNode* node)
         case TOK_LESS_EQUAL : opcode = IR_CMP_LE; break;
         case TOK_GREATER : opcode = IR_CMP_GT; break;
         case TOK_LESS : opcode = IR_CMP_LT; break;
-        default: break;
+        default: 
+            DiagnosticContext dc = {
+                .has_error = true,
+                .note = NULL,
+                .line = 0,
+                .type = DIAG_ERROR,
+                .file_name = "NULL"
+            };
+            diagnostic_report(&dc, ERR_INTERNAL);
+            exit(1);
+            break;
     }
     emit_inst(irc, opcode, *dst, *left, *right, 0);
     return dst;

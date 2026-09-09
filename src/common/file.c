@@ -31,7 +31,17 @@ char* read_file(Arena* a, const char* path)
         return NULL;
     }
 
-    fread(buffer, 1, size, file);
+    size_t bytes_read = fread(buffer, 1, size, file);
+    if (bytes_read != size)
+    {
+        if (feof(file)) {
+            fprintf(stderr, "Warning: Unexpected end of file.\n");
+        } else if (ferror(file)) {
+            perror("Error reading file");
+        }
+        return NULL;
+    }
+
     buffer[size] = '\0';
     fclose(file);
     return buffer;
