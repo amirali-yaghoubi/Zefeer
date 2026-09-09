@@ -1,3 +1,5 @@
+// Copyright 2026 Amirali Yaghoubi
+// SPDX-License-Identifier: Apache-2.0
 #pragma once
 #include "middle/semantic_analyzer.h"
 #include "common/arena.h"

@@ -1,3 +1,5 @@
+// Copyright 2026 Amirali Yaghoubi
+// SPDX-License-Identifier: Apache-2.0
 #include "back/arm64.h"
 #include "back/arm64.h"
 #include "middle/ir.h"

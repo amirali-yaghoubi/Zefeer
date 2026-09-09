@@ -1,3 +1,5 @@
+// Copyright 2026 Amirali Yaghoubi
+// SPDX-License-Identifier: Apache-2.0
 #ifndef ARENA_MIN_BLOCK_SIZE
 #define ARENA_MIN_BLOCK_SIZE (32 * 1024)
 #endif

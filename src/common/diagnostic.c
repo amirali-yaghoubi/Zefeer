@@ -1,3 +1,5 @@
+// Copyright 2026 Amirali Yaghoubi
+// SPDX-License-Identifier: Apache-2.0
 #include "common/diagnostic.h"
 #include "front/parser.h"
 #include <stdio.h>
