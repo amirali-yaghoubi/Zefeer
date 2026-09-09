@@ -1,5 +1,5 @@
 C       = gcc
-CFLAGS   = -Wall -Wextra -Iinclude -g
+CFLAGS = -std=gnu17 -Wall -Wextra
 LDFLAGS  =
 DEPFLAGS = -MMD -MP
 
