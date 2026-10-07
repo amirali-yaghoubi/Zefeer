@@ -65,7 +65,7 @@ Supported comparison operators:
 ### While loops:
 Use `while` for loops:
 ```zefeer
-let c : int = 5;
+let x : int = 5;
 
 while (x > 0) {
     print(x);
