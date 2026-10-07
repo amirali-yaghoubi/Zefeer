@@ -88,28 +88,39 @@ print(x);
 ```
 
 
-## How to run (the straightforward and standard way)(Linux)
-1. ```make main```
-2. ```./build/zfc YOUR_SOURCE_CODE_NAME.zf```
+## How to run
 
-## Running on non-ARM64 systems
+Tested on Ubuntu. Debian-based distros should work identically.
+On other distros, use the equivalent package manager.
+
+### 1. Compile to assembly
+```bash
+make main
+./build/zfc YOUR_SOURCE_CODE_NAME.zf -o YOUR_ASSEMBLY_FILE_NAME.s
+```
+
+### 2. Assemble and run
+#### Non-ARM64 (x86_64 Linux with QEMU)
 Zefeer generates ARM64 assembly.
-On x86_64 Linux, you can use QEMU:
+On x86_64 Linux, you can use QEMU.
 
-### Installing the dependencies
+##### Installing the dependencies
 ```bash
 sudo apt install gcc-aarch64-linux-gnu qemu-user
 ```
 
-### Running
-1.
+##### Then run it:
 ```bash
-aarch64-linux-gnu-gcc <ASSEMBLY_FILE_NAME>.s -o <OUTPUT_FILE_NAME>
+aarch64-linux-gnu-gcc YOUR_ASSEMBLY_FILE_NAME.s -o YOUR_OUTPUT_FILE_NAME
+qemu-aarch64 ./YOUR_OUTPUT_FILE_NAME
 ```
-2.
+
+#### Native ARM64
 ```bash
-qemu-aarch64 ./<OUTPUT_FILE_NAME>
+gcc YOUR_ASSEMBLY_FILE_NAME.s -o YOUR_OUTPUT_FILE_NAME
+./YOUR_OUTPUT_FILE_NAME
 ```
+
 
 ## Build
 Ubuntu / Debian:
