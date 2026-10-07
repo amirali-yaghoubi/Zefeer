@@ -3,6 +3,13 @@
 ## Overview
 Zefeer is a simple C-like compiled programming language. The compiler is written entirely in C, from scratch.
 
+It implements a full pipeline: lexer → parser → semantic analysis → IR →
+ARM64 assembly generation.
+
+## Execution Model
+Zefeer does not have a `main` function. Statements at the top level of a
+`.zf` file are executed in order, top to bottom.
+
 ## Status
 Status: v0.1.0 released — stable
 
@@ -79,7 +86,6 @@ Values can printed using `print`:
 let x : int = 6;
 print(x);
 ```
-
 
 
 ## How to run (the straightforward and standard way)(Linux)
