@@ -11,7 +11,7 @@ Zefeer does not have a `main` function. Statements at the top level of a
 `.zf` file are executed in order, top to bottom.
 
 ## Status
-Status: v0.1.0 released — stable
+Status: v0.1.1 released — stable
 
 ## Features
 
