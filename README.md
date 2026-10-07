@@ -20,7 +20,7 @@ Status: v0.1.0 released — stable
 variables are declared using `let`, only integer supported:
 ```zefeer
 let x : int = 10;
-int y : int = 2;
+let y : int = 2;
 ```
 note: Declaration without initializing is not supported, if don't want to assign with anything, you must initialize with zero.
 
